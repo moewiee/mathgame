@@ -89,6 +89,11 @@ document.addEventListener('dblclick', e => e.preventDefault());
 // ====================================================
 // INIT
 // ====================================================
+// On touch devices, make input readonly to prevent any keyboard/cursor behavior
+if (isTouchDevice) {
+  document.getElementById('answer-input').setAttribute('readonly', 'readonly');
+}
+
 updateModeUI();
 initClouds();
 bird.y = SKY_H / 2;

@@ -116,7 +116,7 @@ function nextRound() {
   document.getElementById('question-text').textContent = currentQuestion.text;
   document.getElementById('feedback-text').innerHTML = '&nbsp;';
   document.getElementById('answer-input').value = '';
-  document.getElementById('answer-input').focus();
+  if (!isTouchDevice) document.getElementById('answer-input').focus();
   updateTimerBar();
 }
 

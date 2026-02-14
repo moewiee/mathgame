@@ -41,6 +41,9 @@ let screenShake = 0;
 let clouds = [];
 let hitGround = false;
 
+// Touch detection
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
 // Canvas
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
