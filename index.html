@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Flappy Math!</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <button id="sound-toggle" title="Toggle Sound">&#x1F50A;</button>
+
+  <div id="menu" class="screen active">
+    <div class="title">FLAPPY MATH!</div>
+    <div class="subtitle">A Math Adventure for Kids!</div>
+    <div class="option-group">
+      <h2>Game Mode</h2>
+      <div class="btn-group">
+        <button class="opt-btn mode-btn" data-mode="timed">Time Bound<small>Beat the clock</small></button>
+        <button class="opt-btn mode-btn selected" data-mode="survival">Survival<small>3 lives</small></button>
+        <button class="opt-btn mode-btn" data-mode="questions">Questions<small>Fixed count</small></button>
+      </div>
+    </div>
+    <div class="option-group mode-sub" id="timed-options">
+      <h2>Game Duration</h2>
+      <div class="btn-group">
+        <button class="opt-btn timed-btn selected" data-val="5">5 min</button>
+        <button class="opt-btn timed-btn" data-val="10">10 min</button>
+        <button class="opt-btn timed-btn" data-val="15">15 min</button>
+      </div>
+    </div>
+    <div class="option-group mode-sub" id="questions-options">
+      <h2>Number of Questions</h2>
+      <div class="btn-group">
+        <button class="opt-btn qcount-btn" data-val="10">10</button>
+        <button class="opt-btn qcount-btn selected" data-val="20">20</button>
+        <button class="opt-btn qcount-btn" data-val="50">50</button>
+      </div>
+    </div>
+    <div class="option-group">
+      <h2>Difficulty</h2>
+      <div class="btn-group">
+        <button class="opt-btn diff-btn selected" data-diff="easy">Easy<small>1 &ndash; 10</small></button>
+        <button class="opt-btn diff-btn" data-diff="medium">Medium<small>1 &ndash; 20</small></button>
+        <button class="opt-btn diff-btn" data-diff="hard">Hard<small>1 &ndash; 100</small></button>
+      </div>
+    </div>
+    <div class="option-group">
+      <h2>Time per Question</h2>
+      <div class="btn-group">
+        <button class="opt-btn time-btn" data-time="10">10 sec</button>
+        <button class="opt-btn time-btn selected" data-time="20">20 sec</button>
+        <button class="opt-btn time-btn" data-time="30">30 sec</button>
+      </div>
+    </div>
+    <button class="start-btn" id="start-btn">START GAME!</button>
+  </div>
+
+  <div id="game" class="screen">
+    <canvas id="canvas" width="520" height="340"></canvas>
+    <div id="question-area">
+      <div id="question-text"></div>
+      <div id="feedback-text">&nbsp;</div>
+      <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
+      <div id="answer-row">
+        <input type="text" id="answer-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="?">
+        <button id="submit-btn">OK</button>
+      </div>
+      <div id="numpad">
+        <button class="num-btn" data-num="1">1</button>
+        <button class="num-btn" data-num="2">2</button>
+        <button class="num-btn" data-num="3">3</button>
+        <button class="num-btn" data-num="4">4</button>
+        <button class="num-btn" data-num="5">5</button>
+        <button class="num-btn" data-num="6">6</button>
+        <button class="num-btn" data-num="7">7</button>
+        <button class="num-btn" data-num="8">8</button>
+        <button class="num-btn" data-num="9">9</button>
+        <button class="num-btn del-btn" data-num="del">&#x232B;</button>
+        <button class="num-btn" data-num="0">0</button>
+        <button class="num-btn ok-btn" data-num="ok">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gameover" class="screen">
+    <div id="go-title">Game Over!</div>
+    <div id="go-score">0</div>
+    <div id="go-message"></div>
+    <div id="go-stats"></div>
+    <button class="start-btn" id="replay-btn">Play Again!</button>
+    <button class="start-btn secondary" id="menu-btn">Main Menu</button>
+  </div>
+
+  <div id="countdown-overlay"><div id="countdown-text"></div></div>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/state.js"></script>
+<script src="js/themes.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/drawing.js"></script>
+<script src="js/pipes.js"></script>
+<script src="js/game.js"></script>
+<script src="js/events.js"></script>
+</body>
+</html>
