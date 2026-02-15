@@ -69,9 +69,51 @@ document.querySelectorAll('.num-btn').forEach(btn => {
   });
 });
 
+// Terrain menu buttons
+document.querySelectorAll('.trn-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.trn-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    preferredTerrain = btn.dataset.terrain;
+  });
+});
+
+// Settings gear button
+document.getElementById('settings-btn').addEventListener('click', pauseGame);
+
+// Settings overlay controls
+document.getElementById('settings-resume-btn').addEventListener('click', resumeGame);
+
+document.getElementById('settings-music-toggle').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('sound-toggle').textContent = soundEnabled ? '\u{1F50A}' : '\u{1F507}';
+  document.getElementById('settings-music-toggle').textContent = soundEnabled ? 'ON' : 'OFF';
+  if (!soundEnabled) stopMusic();
+});
+
+document.querySelectorAll('.terrain-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.terrain-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    preferredTerrain = btn.dataset.terrain;
+    // Apply terrain change immediately if not random
+    if (preferredTerrain !== 'random') {
+      currentThemeName = preferredTerrain;
+      currentTheme = THEMES[preferredTerrain];
+      initThemeEffects();
+    }
+    // Sync menu buttons
+    document.querySelectorAll('.trn-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.terrain === preferredTerrain);
+    });
+  });
+});
+
 document.getElementById('replay-btn').addEventListener('click', startGame);
 document.getElementById('menu-btn').addEventListener('click', () => {
   stopMusic();
+  gamePaused = false;
+  document.getElementById('settings-overlay').classList.remove('active');
   showScreen('menu');
   phase = 'idle';
   pipes = [];

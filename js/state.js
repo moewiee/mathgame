@@ -41,6 +41,11 @@ let screenShake = 0;
 let clouds = [];
 let hitGround = false;
 
+// Settings
+let gamePaused = false;
+let preferredTerrain = 'random';   // 'random' or a specific theme name
+let lastTerrainChangeAt = 0;
+
 // Touch detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 

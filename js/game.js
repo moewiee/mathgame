@@ -41,7 +41,15 @@ function startGame() {
     globalTimer = timedDuration * 60;
   }
 
-  resetTheme();
+  lastTerrainChangeAt = 0;
+  gamePaused = false;
+  if (preferredTerrain !== 'random') {
+    currentThemeName = preferredTerrain;
+    currentTheme = THEMES[preferredTerrain];
+  } else {
+    resetTheme();
+  }
+  initThemeEffects();
   initClouds();
   initPipes();
   showScreen('game');
@@ -180,6 +188,7 @@ function onWrong() {
   }
 
   scrollSpeed = Math.max(scrollSpeed, 320);
+  updateTheme();
 
   const inp = document.getElementById('answer-input');
   inp.classList.add('shake');
@@ -200,6 +209,7 @@ function onTimeout() {
   if (gameMode === 'survival') lives--;
   groundScrolling = false;
   playTimeoutSound();
+  updateTheme();
 
   document.getElementById('feedback-text').textContent = "Time's up! Answer: " + currentQuestion.answer;
   document.getElementById('feedback-text').style.color = '#FFB74D';
@@ -265,6 +275,31 @@ function gameOver() {
   showScreen('gameover');
 }
 
+function pauseGame() {
+  if (phase === 'idle' || gamePaused) return;
+  gamePaused = true;
+  inputEnabled = false;
+  stopMusic();
+  document.getElementById('settings-overlay').classList.add('active');
+  syncSettingsUI();
+}
+
+function resumeGame() {
+  if (!gamePaused) return;
+  gamePaused = false;
+  document.getElementById('settings-overlay').classList.remove('active');
+  if (phase === 'asking') inputEnabled = true;
+  if (soundEnabled) startMusic();
+  lastTime = performance.now();
+}
+
+function syncSettingsUI() {
+  document.getElementById('settings-music-toggle').textContent = soundEnabled ? 'ON' : 'OFF';
+  document.querySelectorAll('.terrain-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.terrain === preferredTerrain);
+  });
+}
+
 function updateTimerBar() {
   if (phase !== 'asking' || !targetPipe) return;
   const pct = (questionTimer / timeLimit) * 100;
@@ -289,6 +324,7 @@ function gameLoop(timestamp) {
 }
 
 function update(dt) {
+  if (gamePaused) return;
   updateClouds(dt);
   updateEffects(dt);
   updateThemeEffects(dt);

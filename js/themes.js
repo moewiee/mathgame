@@ -44,28 +44,38 @@ let currentTheme = THEMES.meadow;
 let themeStars = [];
 let themeBubbles = [];
 
-function getThemeNameForScore(s) {
-  if (s >= 20) return 'underwater';
-  if (s >= 15) return 'space';
-  if (s >= 10) return 'desert';
-  if (s >= 5) return 'night';
-  return 'meadow';
-}
+const THEME_NAMES = Object.keys(THEMES);
+
+const THEME_ANNOUNCE = {
+  meadow: 'Meadow Breeze!',
+  night: 'Night Falls!',
+  desert: 'Desert Heat!',
+  space: 'Blast Off!',
+  underwater: 'Deep Dive!'
+};
 
 function updateTheme() {
-  const newName = getThemeNameForScore(score);
-  if (newName !== currentThemeName) {
+  if (preferredTerrain !== 'random') {
+    // Fixed terrain
+    if (currentThemeName !== preferredTerrain) {
+      currentThemeName = preferredTerrain;
+      currentTheme = THEMES[preferredTerrain];
+      initThemeEffects();
+    }
+    return;
+  }
+
+  // Random terrain: change every 5 questions answered
+  const total = stats.correct + stats.wrong + stats.timeout;
+  if (total > 0 && total % 5 === 0 && total !== lastTerrainChangeAt) {
+    lastTerrainChangeAt = total;
+    const choices = THEME_NAMES.filter(n => n !== currentThemeName);
+    const newName = choices[Math.floor(Math.random() * choices.length)];
     currentThemeName = newName;
     currentTheme = THEMES[newName];
     initThemeEffects();
-    const texts = {
-      night: 'Night Falls!',
-      desert: 'Desert Heat!',
-      space: 'Blast Off!',
-      underwater: 'Deep Dive!'
-    };
-    if (texts[newName]) {
-      addFloatingText(CW / 2, SKY_H / 2 - 20, texts[newName], '#FFD600', 38);
+    if (THEME_ANNOUNCE[newName]) {
+      addFloatingText(CW / 2, SKY_H / 2 - 20, THEME_ANNOUNCE[newName], '#FFD600', 38);
     }
   }
 }

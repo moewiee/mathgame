@@ -8,11 +8,15 @@
 </head>
 <body>
 <div id="app">
-  <button id="sound-toggle" title="Toggle Sound">&#x1F50A;</button>
 
   <div id="menu" class="screen active">
-    <div class="title">FLAPPY MATH!</div>
-    <div class="subtitle">A Math Adventure for Kids!</div>
+    <div class="menu-header">
+      <div>
+        <div class="title">FLAPPY MATH!</div>
+        <div class="subtitle">A Math Adventure for Kids!</div>
+      </div>
+      <button id="sound-toggle" title="Toggle Sound">&#x1F50A;</button>
+    </div>
     <div class="option-group">
       <h2>Game Mode</h2>
       <div class="btn-group">
@@ -21,28 +25,30 @@
         <button class="opt-btn mode-btn" data-mode="questions">Questions<small>Fixed count</small></button>
       </div>
     </div>
-    <div class="option-group mode-sub" id="timed-options">
-      <h2>Game Duration</h2>
-      <div class="btn-group">
-        <button class="opt-btn timed-btn selected" data-val="5">5 min</button>
-        <button class="opt-btn timed-btn" data-val="10">10 min</button>
-        <button class="opt-btn timed-btn" data-val="15">15 min</button>
+    <div class="mode-sub-wrap">
+      <div class="option-group mode-sub" id="timed-options">
+        <h2>Game Duration</h2>
+        <div class="btn-group">
+          <button class="opt-btn timed-btn selected" data-val="5">5 min</button>
+          <button class="opt-btn timed-btn" data-val="10">10 min</button>
+          <button class="opt-btn timed-btn" data-val="15">15 min</button>
+        </div>
       </div>
-    </div>
-    <div class="option-group mode-sub" id="questions-options">
-      <h2>Number of Questions</h2>
-      <div class="btn-group">
-        <button class="opt-btn qcount-btn" data-val="10">10</button>
-        <button class="opt-btn qcount-btn selected" data-val="20">20</button>
-        <button class="opt-btn qcount-btn" data-val="50">50</button>
+      <div class="option-group mode-sub" id="questions-options">
+        <h2>Number of Questions</h2>
+        <div class="btn-group">
+          <button class="opt-btn qcount-btn" data-val="10">10</button>
+          <button class="opt-btn qcount-btn selected" data-val="20">20</button>
+          <button class="opt-btn qcount-btn" data-val="50">50</button>
+        </div>
       </div>
     </div>
     <div class="option-group">
       <h2>Difficulty</h2>
       <div class="btn-group">
-        <button class="opt-btn diff-btn selected" data-diff="easy">Easy<small>1 &ndash; 10</small></button>
-        <button class="opt-btn diff-btn" data-diff="medium">Medium<small>1 &ndash; 20</small></button>
-        <button class="opt-btn diff-btn" data-diff="hard">Hard<small>1 &ndash; 100</small></button>
+        <button class="opt-btn diff-btn selected" data-diff="easy">Easy<small>+ &minus; (1&ndash;10)</small></button>
+        <button class="opt-btn diff-btn" data-diff="medium">Medium<small>+ &minus; (1&ndash;20) &times; (1&ndash;10)</small></button>
+        <button class="opt-btn diff-btn" data-diff="hard">Hard<small>+ &minus; (1&ndash;100) &times; (1&ndash;20)</small></button>
       </div>
     </div>
     <div class="option-group">
@@ -53,13 +59,27 @@
         <button class="opt-btn time-btn" data-time="30">30 sec</button>
       </div>
     </div>
+    <div class="option-group">
+      <h2>Terrain</h2>
+      <div class="btn-group">
+        <button class="opt-btn trn-btn selected" data-terrain="random">Random<small>Changes every 5 Q</small></button>
+        <button class="opt-btn trn-btn" data-terrain="meadow">Meadow</button>
+        <button class="opt-btn trn-btn" data-terrain="night">Night</button>
+        <button class="opt-btn trn-btn" data-terrain="desert">Desert</button>
+        <button class="opt-btn trn-btn" data-terrain="space">Space</button>
+        <button class="opt-btn trn-btn" data-terrain="underwater">Ocean</button>
+      </div>
+    </div>
     <button class="start-btn" id="start-btn">START GAME!</button>
   </div>
 
   <div id="game" class="screen">
     <canvas id="canvas" width="520" height="340"></canvas>
     <div id="question-area">
-      <div id="question-text"></div>
+      <div id="question-header">
+        <div id="question-text"></div>
+        <button id="settings-btn" title="Pause">&#x23F8;&#xFE0F;</button>
+      </div>
       <div id="feedback-text">&nbsp;</div>
       <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
       <div id="answer-row">
@@ -93,13 +113,35 @@
   </div>
 
   <div id="countdown-overlay"><div id="countdown-text"></div></div>
+
+  <div id="settings-overlay">
+    <div id="settings-panel">
+      <div class="settings-title">PAUSED</div>
+      <div class="settings-row">
+        <span>Music</span>
+        <button id="settings-music-toggle" class="settings-toggle">ON</button>
+      </div>
+      <div class="settings-section">
+        <span>Terrain</span>
+        <div class="settings-terrain">
+          <button class="terrain-btn selected" data-terrain="random">Random</button>
+          <button class="terrain-btn" data-terrain="meadow">Meadow</button>
+          <button class="terrain-btn" data-terrain="night">Night</button>
+          <button class="terrain-btn" data-terrain="desert">Desert</button>
+          <button class="terrain-btn" data-terrain="space">Space</button>
+          <button class="terrain-btn" data-terrain="underwater">Ocean</button>
+        </div>
+      </div>
+      <button id="settings-resume-btn" class="start-btn">RESUME</button>
+    </div>
+  </div>
 </div>
 
 <script src="js/audio.js"></script>
 <script src="js/constants.js"></script>
 <script src="js/state.js"></script>
 <script src="js/themes.js"></script>
-<script src="js/questions.js"></script>
+<script src="js/questions.js?v=2"></script>
 <script src="js/effects.js"></script>
 <script src="js/drawing.js"></script>
 <script src="js/pipes.js"></script>
